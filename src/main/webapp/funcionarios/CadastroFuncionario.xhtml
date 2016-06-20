@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/LayoutPadrao.xhtml">
+
+	<ui:define name="content">
+	    <f:metadata>
+	        <f:viewAction action="#{cadastroFuncionarioBean.inicializar}" />
+	    </f:metadata>
+		<h1 class="aw-page-title">Cadastro de Funcionário</h1>
+		<h:form id="frmCadastro" enctype="multipart/form-data">
+		
+		    <p:messages autoUpdate="true" closable="true" />
+		    
+			<p:toolbar>
+				<f:facet name="left">
+					<p:commandButton value="Salvar" action="#{cadastroFuncionarioBean.salvar}" update="frmCadastro"
+					    ajax="false" />
+				</f:facet>
+				<f:facet name="right">
+					<p:button value="Pesquisar" outcome="/professores/PesquisaProfessor" />
+				</f:facet>
+			</p:toolbar>
+			
+			<div class="ui-fluid">
+				<h:panelGroup layout="block" styleClass="ui-fluid">
+					<p:panelGrid id="funcionario-panel" columns="2"
+						style="margin-top: 20px;" layout="grid"
+						styleClass="panelgrid-noborder"
+						columnClasses="ui-grid-col-2, ui-grid-col-3">
+
+                        <p:outputLabel value="Nome" for="nome" />
+						<p:inputText id="nome" value="#{cadastroFuncionarioBean.funcionario.nome}" />
+						
+						<p:outputLabel value="Data Nascimento" for="dataNascimento" />
+						<p:calendar id="dataNascimento" pattern="dd/MM/yyyy" value="#{cadastroFuncionarioBean.funcionario.dataNascimento}" />
+						
+						<p:outputLabel value="Idade" for="idade" />
+						<p:inputText id="idade" value="#{cadastroFuncionarioBean.funcionario.idade}" />
+						
+						<p:outputLabel value="Cargo" for="cargo" />
+						<p:inputText id="cargo" value="#{cadastroFuncionarioBean.funcionario.nomeCargo}" />
+						
+						<p:outputLabel value="Foto" />
+						<h:panelGroup>
+						    <p:commandButton rendered="#{cadastroFuncionarioBean.funcionario.hasFoto()}" icon="ui-icon-extlink" title="Imagem" 
+			    			    process="@this" oncomplete="PF('mostraImagem').show()" update=":frmCadastro:mostraImagemDialog">
+						    <f:setPropertyActionListener target="#{fotoPessoaBean.pessoaSelecionada}" value="#{cadastroFuncionarioBean.funcionario}" />
+					        </p:commandButton>
+							<p:fileUpload id="foto" value="#{cadastroFuncionarioBean.fotoPessoa}" mode="simple" />
+						</h:panelGroup>
+					</p:panelGrid>
+				</h:panelGroup>
+				
+				<p:dialog id="mostraImagemDialog" header="Imagem" widgetVar="mostraImagem" modal="true" closeOnEscape="true">
+    			    <p:graphicImage value="#{fotoPessoaBean.foto}" width="100" height="80" cache="false" />
+			    </p:dialog>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

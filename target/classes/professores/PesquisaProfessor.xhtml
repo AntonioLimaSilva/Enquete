@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/LayoutPadrao.xhtml">
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{cadastroProfessorBean.inicializar}" />
+		</f:metadata>
+		<h1 class="aw-page-title">Cadastro de professor</h1>
+		<h:form id="frmCadastro" enctype="multipart/form-data">
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar>
+				<f:facet name="left">
+					<p:commandButton value="Pesquisar"
+						action="#{pesquisaProfessorBean.inicializar}" update="frmCadastro" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:dataTable id="professores-table"
+				value="#{pesquisaProfessorBean.professores}" var="professor"
+				emptyMessage="Nenhuma acessório cadastrada." rows="10"
+				paginator="true" paginatorPosition="bottom"
+				style="margin-top: 20px;" reflow="true">
+
+				<p:column headerText="Código">
+					<h:outputText value="#{professor.codigo}" />
+				</p:column>
+				<p:column headerText="Nome">
+					<h:outputText value="#{professor.nome}" />
+				</p:column>
+
+				<p:column headerText="Matéria">
+					<h:outputText value="#{professor.nomeMateria}" />
+				</p:column>
+
+				<p:column headerText="Serie">
+					<h:outputText value="#{professor.tipoSerie}" />
+				</p:column>
+
+				<p:column headerText="Turma">
+					<h:outputText value="#{professor.turma}" />
+				</p:column>
+
+				<p:column headerText="Turno">
+					<h:outputText value="#{professor.turno}" />
+				</p:column>
+
+				<p:column headerText="Ações">
+					<p:commandButton title="Enquete" icon="ui-icon-extlink"
+					    
+						oncomplete="PF('enqueteDialog').show()" />
+				</p:column>
+			</p:dataTable>
+
+			<p:dialog id="enqueteFuncionarioDialog" widgetVar="enqueteDialog"
+				resizable="false" style="min-width: 40%" responsive="true"
+				modal="true" header="Enquete">
+				<div class="ui-fluid">
+					<h:panelGroup layout="block" styleClass="ui-fluid">
+
+						<p:panelGrid id="enquete-panel" columns="2"
+							style="margin-top: 20px;" layout="grid"
+							styleClass="panelgrid-noborder"
+							columnClasses="ui-grid-col-1, ui-grid-col-3">
+
+							<p:outputLabel value="Professor" for="professor" />
+							<p:inputText value="#{professor.codigo}" readonly="true" />
+							<p:graphicImage id="professor" value="#{fotoProfessorBean.foto}"
+								cache="false" />
+
+							<p:outputLabel value="Avaliação" for="avaliacao" />
+							<p:outputLabel />
+							<p:selectOneRadio id="avaliacao" layout="pageDirection">
+								<f:selectItem itemLabel="Excelente" />
+								<f:selectItem itemLabel="Bom" />
+								<f:selectItem itemLabel="Regular" />
+								<f:selectItem itemLabel="Pessimo" />
+							</p:selectOneRadio>
+						</p:panelGrid>
+					</h:panelGroup>
+				</div>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

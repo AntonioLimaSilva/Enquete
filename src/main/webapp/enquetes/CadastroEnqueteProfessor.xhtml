@@ -1,0 +1,102 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/WEB-INF/templates/LayoutPadrao.xhtml">
+
+	<ui:define name="content">
+		<h1 class="aw-page-title">Cadastro de Enquete Professor</h1>
+		<h:form id="frmEnquete" enctype="multipart/form-data">
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar>
+				<f:facet name="left">
+					<p:commandButton value="Salvar" action="#{cadastroEnqueteProfessorBean.salvar}" update="@form" />
+				</f:facet>
+
+				<f:facet name="right">
+					<p:button value="Pesquisa" outcome="/enquetes/PesquisaEnqueteProfessor" />
+				</f:facet>
+			</p:toolbar>
+
+			<div class="ui-fluid">
+				<h:panelGroup layout="block" styleClass="ui-fluid">
+					<p:panelGrid id="filtro-panel" columns="6" layout="grid"
+						styleClass="panelgrid-noborder"
+						columnClasses="ui-grid-col-0, ui-grid-col-2, ui-grid-col-0, ui-grid-col-2, ui-grid-col-0, ui-grid-col-2"
+						style="margin-top: 20px;">
+						<p:outputLabel value="Serie" for="serie" />
+						<p:selectManyMenu id="serie" value="#{cadastroEnqueteProfessorBean.filtro.tipoSeries}">
+						    <f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{cadastroEnqueteProfessorBean.tipoSeries}" var="serie"
+							    itemLabel="#{serie.descricao}" itemValue="#{serie}" />
+							    <p:ajax event="click" listener="#{cadastroEnqueteProfessorBean.consultar}" update="professor" />
+						</p:selectManyMenu>
+
+						<p:outputLabel value="Turma" for="turma" />
+						<p:selectManyMenu id="turma" value="#{cadastroEnqueteProfessorBean.enquete.tipoTurma}">
+						    <f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{cadastroEnqueteProfessorBean.tipoTurmas}" var="turma"
+							   itemLabel="#{turma.descricao}" itemValue="#{turma}" />
+							   <p:ajax event="click" listener="#{cadastroEnqueteProfessorBean.consultar}" update="professor" />
+						</p:selectManyMenu>
+
+						<p:outputLabel value="Turno" for="turno" />
+						<p:selectManyMenu id="turno" value="#{cadastroEnqueteProfessorBean.enquete.tipoTurno}"
+						    layout="pageDirection">
+						    <f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{cadastroEnqueteProfessorBean.tipoTurnos}" var="turno"
+							   itemLabel="#{turno.descricao}" itemValue="#{turno}" />
+							   <p:ajax event="click" listener="#{cadastroEnqueteProfessorBean.consultar}" update="professor" />
+						</p:selectManyMenu>
+					</p:panelGrid>
+				</h:panelGroup>
+			</div>
+
+			<div class="ui-fluid">
+				<h:panelGroup layout="block" styleClass="ui-fluid">
+					<p:panelGrid id="enquete-panel" columns="2"
+						style="margin-top: 20px;" layout="grid"
+						styleClass="panelgrid-noborder"
+						columnClasses="ui-grid-col-1, ui-grid-col-4">
+
+						<p:outputLabel value="Professor" for="professor" />
+						<p:selectOneMenu id="professor" value="#{cadastroEnqueteProfessorBean.enquete.professor}">
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{cadastroEnqueteProfessorBean.professores}"
+								var="professor" itemLabel="#{professor.nome}" itemValue="#{professor}" />	
+																			
+						</p:selectOneMenu>
+						
+						<p:commandButton value="Foto" action="#{cadastroEnqueteProfessorBean.buscarFoto}" />
+						
+					    <p:outputLabel value="Professor" for="professorFoto" />
+					    <p:graphicImage id="professorFoto" value="#{fotoProfessorBean.foto}"
+							cache="false" width="100" height="80" />
+
+						<p:outputLabel value="Perguntas" for="pergunta" />
+						<p:selectOneListbox id="pergunta"
+							value="#{cadastroEnqueteProfessorBean.enquete.pergunta}"
+							layout="pageDirection">
+							<f:selectItems value="#{cadastroEnqueteProfessorBean.perguntas}"
+								var="pergunta" itemLabel="#{pergunta.descricao}"
+								itemValue="#{pergunta}" />
+						</p:selectOneListbox>
+
+						<p:outputLabel value="Respostas" for="resposta" />
+						<p:selectOneRadio id="resposta"
+							value="#{cadastroEnqueteProfessorBean.enquete.resposta}"
+							layout="pageDirection">
+							<f:selectItems value="#{cadastroEnqueteProfessorBean.respostas}"
+								var="resposta" itemLabel="#{resposta.descricao}"
+								itemValue="#{resposta}" />
+						</p:selectOneRadio>
+					</p:panelGrid>
+				</h:panelGroup>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

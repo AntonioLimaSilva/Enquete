@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+	
+	<nav class="aw-menu">
+		<ul>
+			<li>
+				<h:link><i class="fa  fa-fw  fa-home"></i>Dashboard</h:link>
+			</li>
+			<li class="is-selected">
+				<h:link outcome="/enquetes/CadastroEnqueteProfessor"><i class="fa  fa-fw  fa-user"></i>Enquete Professor</h:link>
+			</li>
+		    <li>
+				<h:link outcome="/enquetes/CadastroEnqueteFuncionario"><i class="fa  fa-fw  fa-file-text"></i>Enquete Funcionário</h:link>
+			</li>  
+			<li>
+				<h:link outcome="/professores/CadastroProfessor"><i class="fa  fa-fw  fa-file-text"></i>Professor</h:link>
+			</li>
+			<li>
+				<h:link outcome="/funcionarios/CadastroFuncionario"><i class="fa  fa-fw  fa-file-text"></i>Funcionário</h:link>
+			</li>
+			<li>
+				<h:link outcome="/perguntas/CadastroPergunta"><i class="fa  fa-fw  fa-cog"></i>Pergunta</h:link>
+			</li>
+		</ul>
+	</nav>
+	
+</ui:composition>
