@@ -7,8 +7,8 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<properties>		
 		    <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/enqueteflf" />
-			<property name="javax.persistence.jdbc.user" value="user" />
-			<property name="javax.persistence.jdbc.password" value="*****" />
+			<property name="javax.persistence.jdbc.user" value="username" />
+			<property name="javax.persistence.jdbc.password" value="******" />
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />			
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 				
